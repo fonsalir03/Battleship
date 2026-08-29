@@ -1,9 +1,49 @@
-export class Ship {
-    //length
-    //number of times hit
-    //is sunk?
+class Ship {
+    constructor(length){
+        this.length = length
+        this.hits = 0
+    }
 
-    //hit() that increases the number of times hit
-    //isSunk() determines if the ship is sunk based on lenght and number of times hit : bool
+    hit(){
+        if (this.hits>=this.length) return
+        this.hits +=1
+    }
+
+    isSunk(){
+        if (this.length == this.hits) return true
+        return false
+    }
 
 };
+
+class Carrier extends Ship{
+    constructor(){
+        super(5)
+    }
+}
+
+class Battleship extends Ship{
+    constructor(){
+        super(4)
+    }
+}
+
+class Destroyer extends Ship{
+    constructor(){
+        super(3)
+    }
+}
+
+class Submarine extends Ship{
+    constructor(){
+        super(3)
+    }
+}
+
+class PatrolBoat extends Ship{
+    constructor(){
+        super(2)
+    }
+}
+
+export {Carrier, Battleship, Destroyer, Submarine, PatrolBoat}
