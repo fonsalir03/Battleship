@@ -4,7 +4,8 @@ export class Gameboard {
     //needs a corindate plan to represet ship positions [x]
     //grid size is 10x10 [x]
     //construct all ship types [x]
-    //placeShip(x,y,orienation)
+    //placeShip(ship,x,y)
+    //property to track orientation
     //receiveAttack() takes a pair of cordinates and determines if its a hit or miss and keeps track of the cordninate hit
     // if hit, update that ship object
     // if miss, keep track of that missed attack
@@ -16,6 +17,6 @@ export class Gameboard {
 
     constructor(){
         this.grid = new Array(10).fill(new Array(10).fill([]))
-        this.ships = [new Carrier, new Battleship, new Destroyer, new Submarine, new PatrolBoat]
+        this.ships = {"carrier": new Carrier, "battle": new Battleship, "destroyer": new Destroyer, "submarine": new Submarine, "patrol": new PatrolBoat}
     }
 }

@@ -14,9 +14,9 @@ test("gameboard has 10 columns", ()=>{
 
 test("each ship type is defined", ()=>{
     const board = new Gameboard
-    expect(board.ships.some((ship)=> ship instanceof Carrier)).toBeTruthy()
-    expect(board.ships.some((ship)=> ship instanceof Battleship)).toBeTruthy()
-    expect(board.ships.some((ship)=> ship instanceof Destroyer)).toBeTruthy()
-    expect(board.ships.some((ship)=> ship instanceof Submarine)).toBeTruthy()
-    expect(board.ships.some((ship)=> ship instanceof PatrolBoat)).toBeTruthy()
+    expect(board.ships["carrier"] instanceof Carrier).toBeTruthy()
+    expect(board.ships["battle"] instanceof Battleship).toBeTruthy()
+    expect(board.ships["destroyer"] instanceof Destroyer).toBeTruthy()
+    expect(board.ships["submarine"] instanceof Submarine).toBeTruthy()
+    expect(board.ships["patrol"] instanceof PatrolBoat).toBeTruthy()
 })
