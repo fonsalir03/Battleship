@@ -2,8 +2,7 @@ class Ship {
     constructor(length){
         this.length = length
         this.hits = 0
-        //verticle = 0, horizontal = 1
-        this.orientation = 0
+        this.orientation = "v"
     }
 
     hit(){
