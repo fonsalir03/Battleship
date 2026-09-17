@@ -84,3 +84,11 @@ test("gameboard will not place a ship that goes out of bounds", ()=>{
     expect(board.getCell(0,9)=="unset").toBeTruthy()
 
 })
+
+test("getCell only returns cells in bound", ()=> {
+    const board = new Gameboard
+
+    expect(board.getCell(0,0)).toBe("unset")
+    expect(board.getCell(-3,2)).toBe(undefined)
+    expect(board.getCell(13,7)).toBe(undefined)
+})
