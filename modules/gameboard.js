@@ -1,5 +1,12 @@
 import { Carrier, Battleship, Destroyer, Submarine, PatrolBoat } from "./ship.js"
 
+class Cell {
+    constructor(){
+        this.ship = "unset"
+        this.attacked = false
+    }
+}
+
 export class Gameboard {
     //needs a corindate plan to represet ship positions [x]
     //grid size is 10x10 [x]
@@ -16,10 +23,14 @@ export class Gameboard {
     
 
     constructor(){
-        this.grid = new Array(10)
-        for (let i = 0; i < this.grid.length; i++){
-            this.grid[i] = new Array(10).fill("unset")
+        this.grid = new Array
+        for (let i = 0; i < 10; i++){
+            this.grid.push([])
+            for (let j = 0; j < 10; j++){
+                this.grid[i].push(new Cell)
+            }
         }
+
 
         this.ships = {"carrier": new Carrier, "battle": new Battleship, "destroyer": new Destroyer, "submarine": new Submarine, "patrol": new PatrolBoat}
         this.orientation = "v"
@@ -31,7 +42,7 @@ export class Gameboard {
     }
 
     setCell(ship,x,y){
-        this.grid[y][x] = ship
+        this.getCell(x,y).ship = ship
     }
 
     //places the head of the ship at specified cordinates, [x,y]
@@ -42,13 +53,12 @@ export class Gameboard {
         ship.orientation = this.orientation
 
         for (let i = 0; i<ship.length; i++){
-            if (ship.orientation == "v"){
-                if (this.getCell(x,y+i) != "unset") return
-            }
-            if (ship.orientation == "h"){
-                if (this.getCell(x+i,y) != "unset") return 
-            }
-            
+            let cell = undefined
+            if (ship.orientation == "v") cell = this.getCell(x,y+i)
+            else if (ship.orientation == "h") cell = this.getCell(x+i,y)
+
+            if (!cell) return
+            else if (cell.ship != "unset") return
         }
 
         for (let i = 0; i<ship.length; i++){
@@ -61,4 +71,13 @@ export class Gameboard {
             
         }
     }
+
+    //update cells to be objects
+    //use class
+    // {ship: "unset", attacked: false}
+
+    //receiveAttack(cordinates)
+    //getcell
+    //if unset, change attacked to true
+    //if ship, run ship.hit() and update that cell to prevent double hit
 }

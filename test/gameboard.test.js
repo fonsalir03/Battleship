@@ -25,10 +25,10 @@ test("the grid holds destroyer in verticle orientation", ()=>{
 
     //place patroal head at 33 with verticle orientation
     board.placeShip(board.ships["patrol"], [3,3])
-    expect(board.getCell(3,2) == "unset").toBeTruthy()
-    expect(board.getCell(3,3) == board.ships["patrol"]).toBeTruthy()
-    expect(board.getCell(3,4) == board.ships["patrol"]).toBeTruthy()
-    expect(board.getCell(3,5) == "unset").toBeTruthy()
+    expect(board.getCell(3,2)["ship"] == "unset").toBeTruthy()
+    expect(board.getCell(3,3)["ship"] == board.ships["patrol"]).toBeTruthy()
+    expect(board.getCell(3,4)["ship"] == board.ships["patrol"]).toBeTruthy()
+    expect(board.getCell(3,5)["ship"] == "unset").toBeTruthy()
 
 })
 
@@ -38,10 +38,10 @@ test("the grid holds destroyer in horizontal orientation", ()=>{
 
     //place destroyer head at 00 with horizontal orientation
     board.placeShip(board.ships["destroyer"], [0,0])
-    expect(board.getCell(0,0) == board.ships["destroyer"]).toBeTruthy()
-    expect(board.getCell(1,0) == board.ships["destroyer"]).toBeTruthy()
-    expect(board.getCell(2,0) == board.ships["destroyer"]).toBeTruthy()
-    expect(board.getCell(3,0) == "unset").toBeTruthy()
+    expect(board.getCell(0,0)["ship"] == board.ships["destroyer"]).toBeTruthy()
+    expect(board.getCell(1,0)["ship"] == board.ships["destroyer"]).toBeTruthy()
+    expect(board.getCell(2,0)["ship"] == board.ships["destroyer"]).toBeTruthy()
+    expect(board.getCell(3,0)["ship"] == "unset").toBeTruthy()
 
 })
 
@@ -55,19 +55,19 @@ test("gameboard will not place a ship if it overrides another", ()=>{
     board.placeShip(board.ships["battle"], [5,3])
 
     // [4,4]-[6,4] should be submarine
-    expect(board.getCell(4,4)==board.ships["submarine"]).toBeTruthy()
-    expect(board.getCell(5,4)==board.ships["submarine"]).toBeTruthy()
-    expect(board.getCell(6,4)==board.ships["submarine"]).toBeTruthy()
+    expect(board.getCell(4,4)["ship"]==board.ships["submarine"]).toBeTruthy()
+    expect(board.getCell(5,4)["ship"]==board.ships["submarine"]).toBeTruthy()
+    expect(board.getCell(6,4)["ship"]==board.ships["submarine"]).toBeTruthy()
 
     // [7,4]-[10,4] should not have carrier
-    expect(board.getCell(7,4)=="unset").toBeTruthy()
-    expect(board.getCell(8,4)=="unset").toBeTruthy()
-    expect(board.getCell(9,4)=="unset").toBeTruthy()
+    expect(board.getCell(7,4)["ship"]=="unset").toBeTruthy()
+    expect(board.getCell(8,4)["ship"]=="unset").toBeTruthy()
+    expect(board.getCell(9,4)["ship"]=="unset").toBeTruthy()
 
     // [5,3], [5,5] and [5,6] should not have battleship
-    expect(board.getCell(5,3)=="unset").toBeTruthy()
-    expect(board.getCell(5,5)=="unset").toBeTruthy()
-    expect(board.getCell(5,6)=="unset").toBeTruthy()
+    expect(board.getCell(5,3)["ship"]=="unset").toBeTruthy()
+    expect(board.getCell(5,5)["ship"]=="unset").toBeTruthy()
+    expect(board.getCell(5,6)["ship"]=="unset").toBeTruthy()
 
 })
 
@@ -80,15 +80,15 @@ test("gameboard will not place a ship that goes out of bounds", ()=>{
     board.orientation = "v"
     board.placeShip(board.ships["carrier"], [0,9])
 
-    expect(board.getCell(9,0)=="unset").toBeTruthy()
-    expect(board.getCell(0,9)=="unset").toBeTruthy()
+    expect(board.getCell(9,0)["ship"]=="unset").toBeTruthy()
+    expect(board.getCell(0,9)["ship"]=="unset").toBeTruthy()
 
 })
 
 test("getCell only returns cells in bound", ()=> {
     const board = new Gameboard
 
-    expect(board.getCell(0,0)).toBe("unset")
+    expect(board.getCell(0,0)["ship"]).toBe("unset")
     expect(board.getCell(-3,2)).toBe(undefined)
     expect(board.getCell(13,7)).toBe(undefined)
 })
