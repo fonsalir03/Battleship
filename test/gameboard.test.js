@@ -106,7 +106,7 @@ test("a ship and cell reports hits accuratley", () => {
   board.placeShip(board.ships["carrier"], [5, 5]);
   board.receiveAttack([5, 6]);
 
-  
+
   expect(board.getCell(5, 5)["attacked"]).not.toBeTruthy();
   expect(board.getCell(5, 6)["attacked"]).toBeTruthy();
   expect(board.getCell(5, 7)["attacked"]).not.toBeTruthy();
@@ -116,3 +116,27 @@ test("a ship and cell reports hits accuratley", () => {
 });
 
 //ship sink behavior
+test("a ships sink status is reported accuretly", () => {
+  const board = new Gameboard();
+
+  board.placeShip(board.ships.patrol, [4,4]);
+  board.placeShip(board.ships.submarine, [5,5]);
+  board.placeShip(board.ships.destroyer, [6, 5]);
+
+  board.receiveAttack([4,4]);
+  board.receiveAttack([4,5]);
+  
+  expect(board.ships["patrol"].isSunk()).toBeTruthy()
+
+  board.receiveAttack([5,5]);
+  board.receiveAttack([5,6]);
+  board.receiveAttack([5,7]);
+
+  expect(board.ships["submarine"].isSunk()).toBeTruthy()
+
+  board.receiveAttack([6,5]);
+  board.receiveAttack([6,6]);
+  board.receiveAttack([6,7]);
+  expect(board.ships["destroyer"].isSunk()).toBeTruthy()
+
+})

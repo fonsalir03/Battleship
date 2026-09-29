@@ -19,12 +19,11 @@ export class Gameboard {
   //construct all ship types [x]
   //placeShip(ship,x,y) [x]
   //property to track orientation [x]
-  //receiveAttack() takes a pair of cordinates and determines if its a hit or miss and keeps track of the cordninate hit
-  // if hit, update that ship object
-  // if miss, keep track of that missed attack
+  //receiveAttack() takes a pair of cordinates and determines if its a hit or miss and keeps track of the cordninate hit [x]
+  //array of cordinates that were attacked [x]
   //isGameOver() reports true if all ships are sunk
-  // property that tracks the amount of sunken ships
-  //array of cordinates that were attacked but did not have a ship
+  // property that tracks the sunken ships
+
 
   constructor() {
     this.grid = new Array();
@@ -82,10 +81,7 @@ export class Gameboard {
     }
   }
 
-  //receiveAttack(cordinates)
-  //getcell
-  //if unset, change cell.attacked to true
-  //if ship, run ship.hit() and changed cell.attacked to true
+  //receiveAttack([x,y])
   receiveAttack(cordinates) {
     const cell = this.getCell(cordinates[0], cordinates[1]);
     if (!cell) return;
