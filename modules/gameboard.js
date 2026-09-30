@@ -24,7 +24,6 @@ export class Gameboard {
   //isGameOver() reports true if all ships are sunk
   // property that tracks the sunken ships
 
-
   constructor() {
     this.grid = new Array();
     for (let i = 0; i < 10; i++) {
@@ -45,6 +44,7 @@ export class Gameboard {
     this.orientation = "v";
 
     this.hitCells = [];
+    this.sunken = [];
   }
 
   getCell(x, y) {
@@ -56,12 +56,16 @@ export class Gameboard {
     this.getCell(x, y).ship = ship;
   }
 
+  //getShip(shipName)
+  //checkSpaces()
+
   //places the head of the ship at specified cordinates, [x,y]
   placeShip(ship, cordinates) {
     const x = cordinates[0];
     const y = cordinates[1];
     ship.orientation = this.orientation;
 
+    //checks if spaces are void of ship
     for (let i = 0; i < ship.length; i++) {
       let cell = undefined;
       if (ship.orientation == "v") cell = this.getCell(x, y + i);
@@ -72,9 +76,11 @@ export class Gameboard {
     }
 
     for (let i = 0; i < ship.length; i++) {
+      //places ship vertically
       if (ship.orientation == "v") {
         this.setCell(ship, x, y + i);
       }
+      //places ship horizontally
       if (ship.orientation == "h") {
         this.setCell(ship, x + i, y);
       }
@@ -89,6 +95,10 @@ export class Gameboard {
     this.hitCells.push(cordinates);
 
     if (cell.ship == "unset") return;
-    cell.ship.hit();
+    const ship = cell.ship;
+    ship.hit();
+
+    if (ship.isSunk()) this.sunken.push(ship);
   }
+
 }

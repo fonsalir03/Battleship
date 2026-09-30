@@ -101,11 +101,9 @@ test("getCell only returns cells in bound", () => {
 
 // attack behavior
 test("a ship and cell reports hits accuratley", () => {
-
   const board = new Gameboard();
   board.placeShip(board.ships["carrier"], [5, 5]);
   board.receiveAttack([5, 6]);
-
 
   expect(board.getCell(5, 5)["attacked"]).not.toBeTruthy();
   expect(board.getCell(5, 6)["attacked"]).toBeTruthy();
@@ -116,27 +114,33 @@ test("a ship and cell reports hits accuratley", () => {
 });
 
 //ship sink behavior
-test("a ships sink status is reported accuretly", () => {
+test("a ships sink status is reported accuretly on both ship and gameboard", () => {
   const board = new Gameboard();
+  const ships = board.ships;
 
-  board.placeShip(board.ships.patrol, [4,4]);
-  board.placeShip(board.ships.submarine, [5,5]);
-  board.placeShip(board.ships.destroyer, [6, 5]);
+  board.placeShip(ships.patrol, [4, 4]);
+  board.placeShip(ships.submarine, [5, 5]);
+  board.placeShip(ships.destroyer, [6, 5]);
 
-  board.receiveAttack([4,4]);
-  board.receiveAttack([4,5]);
-  
-  expect(board.ships["patrol"].isSunk()).toBeTruthy()
+  board.receiveAttack([4, 4]);
+  board.receiveAttack([4, 5]);
 
-  board.receiveAttack([5,5]);
-  board.receiveAttack([5,6]);
-  board.receiveAttack([5,7]);
+  expect(board.ships["patrol"].isSunk()).toBeTruthy();
 
-  expect(board.ships["submarine"].isSunk()).toBeTruthy()
+  board.receiveAttack([5, 5]);
+  board.receiveAttack([5, 6]);
+  board.receiveAttack([5, 7]);
 
-  board.receiveAttack([6,5]);
-  board.receiveAttack([6,6]);
-  board.receiveAttack([6,7]);
-  expect(board.ships["destroyer"].isSunk()).toBeTruthy()
+  expect(board.ships["submarine"].isSunk()).toBeTruthy();
 
-})
+  board.receiveAttack([6, 5]);
+  board.receiveAttack([6, 6]);
+  board.receiveAttack([6, 7]);
+  expect(board.ships["destroyer"].isSunk()).toBeTruthy();
+
+  expect(board.sunken.includes(ships.patrol)).toBeTruthy();
+  expect(board.sunken.includes(ships.submarine)).toBeTruthy();
+  expect(board.sunken.includes(ships.destroyer)).toBeTruthy();
+});
+
+//gameover behavior
