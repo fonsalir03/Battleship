@@ -3,6 +3,8 @@ class Ship {
     this.length = length;
     this.hits = 0;
     this.orientation = "v";
+    this.x = undefined
+    this.y = undefined
   }
 
   hit() {
