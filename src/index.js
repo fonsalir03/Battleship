@@ -1,1 +1,1 @@
-console.log("hello, webpack!!")
+import domControlller from "./modules/domController.js";
