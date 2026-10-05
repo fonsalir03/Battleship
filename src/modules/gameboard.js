@@ -65,7 +65,6 @@ export class Gameboard {
     const y = cordinates[1];
     ship.orientation = this.orientation;
 
-
     //checks if spaces are void of ship
     for (let i = 0; i < ship.length; i++) {
       let cell = undefined;
@@ -86,8 +85,8 @@ export class Gameboard {
         this.setCell(ship, x + i, y);
       }
     }
-    ship.x = x
-    ship.y = y
+    ship.x = x;
+    ship.y = y;
   }
 
   //receiveAttack([x,y])
@@ -101,12 +100,11 @@ export class Gameboard {
     const ship = cell.ship;
     ship.hit();
 
-    if (ship.isSunk()) this.sunken.push(ship); 
+    if (ship.isSunk()) this.sunken.push(ship);
   }
 
-  isGameOver(){
-    if (this.sunken.length == 5) return true
-    return false
+  isGameOver() {
+    if (this.sunken.length == 5) return true;
+    return false;
   }
-
 }

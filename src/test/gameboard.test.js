@@ -144,25 +144,21 @@ test("a ships sink status is reported accuretly on both ship and gameboard", () 
 });
 
 //gameover behavior
-test("game state is tracked accurately", ()=> {
+test("game state is tracked accurately", () => {
+  const board = new Gameboard();
+  const ships = board.ships;
 
-  const board = new Gameboard
-  const ships = board.ships
+  board.placeShip(ships["carrier"], [0, 0]);
+  board.placeShip(ships["battle"], [1, 0]);
+  board.placeShip(ships["destroyer"], [2, 0]);
+  board.placeShip(ships["submarine"], [3, 0]);
+  board.placeShip(ships["patrol"], [4, 0]);
 
-  board.placeShip(ships["carrier"], [0,0])
-  board.placeShip(ships["battle"], [1,0])
-  board.placeShip(ships["destroyer"], [2,0])
-  board.placeShip(ships["submarine"], [3,0])
-  board.placeShip(ships["patrol"], [4, 0])
-
-  for (let [shipName, ship] of Object.entries(ships)){
-    
-    for (let i = 0; i < ship.length; i++){
-      board.receiveAttack([ship.x, ship.y + i])
+  for (let [shipName, ship] of Object.entries(ships)) {
+    for (let i = 0; i < ship.length; i++) {
+      board.receiveAttack([ship.x, ship.y + i]);
     }
-    
   }
 
-  expect(board.isGameOver()).toBeTruthy()
-
-})
+  expect(board.isGameOver()).toBeTruthy();
+});
