@@ -1,1 +1,3 @@
-import domControlller from "./modules/domController.js";
+import domController from "./modules/domController.js";
+
+domController.createGameboard("player");

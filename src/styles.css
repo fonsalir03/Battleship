@@ -1,0 +1,15 @@
+body {
+  background-color: #594478;
+}
+
+.gameboard {
+  background-color: #3C2E51;
+  display: grid;
+  width: 250px;
+  height: 250px;
+}
+
+.row {
+  display: grid;
+  grid-auto-flow: column;
+}
