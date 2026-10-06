@@ -23,4 +23,12 @@ export default {
       title: "Production",
     },
   },
+  module: {
+    rules: [
+      {
+        test: /\.(svg|png)$/i,
+        type: "asset/resource",
+      }
+    ]
+  }
 };
