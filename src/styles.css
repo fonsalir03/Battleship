@@ -5,11 +5,22 @@ body {
 .gameboard {
   background-color: #3C2E51;
   display: grid;
+  grid-template-rows: repeat(10, minmax(0,1fr));
+  grid-template-columns: repeat(10, minmax(0,1fr));
   width: 250px;
   height: 250px;
 }
 
-.row {
+.ship img {
+  height: 100%;
+  width: 100%;
+}
+.grid {
+
+  grid-column: 1/-1;
+  grid-row: 1/-1;
+
   display: grid;
-  grid-auto-flow: column;
+  grid-template-columns: subgrid;
+  grid-template-rows: subgrid;
 }
