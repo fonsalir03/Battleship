@@ -5,7 +5,7 @@ test("player has gameboard", () => {
   const player = new Player();
   expect(player.board instanceof Gameboard).toBeTruthy();
 });
-test.skip("computer has gameboard", () => {
+test("computer has gameboard", () => {
   const computer = new Computer();
   expect(computer.board instanceof Gameboard).toBeTruthy();
 });
