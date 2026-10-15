@@ -1,13 +1,15 @@
 import horizontalShipIcon from "../asset/ship.png"
 import verticleShipIcon from "../asset/verticle_ship.png"
 
-  //to figure out which cell was clicked
-  //  cells will be numbered from 00-99
-  //  get cell from cordinate -> concat x + y example: [0,5] = 05 = 5. [3,5] = 35. 
-  //  get cordinate from cell -> 03 = [0,3]. 35 = [3,5]. 99 [9,9]
+  //the turn should be indicated by text or change in border color
 
 class DomController {
   constructor() {}
+
+  assignCordinate(cell,cord){
+    cell.dataset.x = cord[0]
+    cell.dataset.y = cord[1]
+  }
 
   //create grid(name)
   createGameboard(name) {
@@ -22,10 +24,24 @@ class DomController {
     grid.classList.add("grid")
 
     //render grid
+    let x = 0
+    let y = 0
     for (let i = 0; i < height*width; i++){
       let newCell = document.createElement("div");
       newCell.classList.add("cell")
+
+      //assign cordinate to cell
+
       grid.appendChild(newCell)
+
+      if (x==width){
+        x = x - width
+        y = y + 1
+      }
+
+      this.assignCordinate(newCell, [x,y])
+
+      x = x + 1
     }
 
     gameboard.append(grid)
