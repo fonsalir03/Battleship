@@ -4,7 +4,9 @@ import verticleShipIcon from "../asset/verticle_ship.png"
   //the turn should be indicated by text or change in border color
 
 class DomController {
-  constructor() {}
+  constructor() {
+    this.cellClickCallback = undefined
+  }
 
   renderTestPanel(){
     this.testPanel = document.createElement("div");
@@ -51,6 +53,7 @@ class DomController {
         y = y + 1
       }
 
+      newCell.addEventListener("click", this.cellClickCallback)
       this.assignCordinate(newCell, [x,y])
 
       x = x + 1
