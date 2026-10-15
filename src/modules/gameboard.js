@@ -25,10 +25,14 @@ export class Gameboard {
   // property that tracks the sunken ships
 
   constructor() {
+
+    this.width = 10
+    this.height = 10
+
     this.grid = new Array();
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < this.width; i++) {
       this.grid.push([]);
-      for (let j = 0; j < 10; j++) {
+      for (let j = 0; j < this.height; j++) {
         this.grid[i].push(new Cell());
       }
     }
