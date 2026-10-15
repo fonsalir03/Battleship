@@ -6,6 +6,18 @@ import verticleShipIcon from "../asset/verticle_ship.png"
 class DomController {
   constructor() {}
 
+  renderTestPanel(){
+    this.testPanel = document.createElement("div");
+    this.testPanel.id = "test-panel"
+
+    const turnContainer = document.createElement("div");
+    turnContainer.id = "turn-container";
+    this.testPanel.appendChild(turnContainer)
+
+    document.body.appendChild(this.testPanel)
+
+  }
+
   assignCordinate(cell,cord){
     cell.dataset.x = cord[0]
     cell.dataset.y = cord[1]
@@ -80,10 +92,10 @@ class DomController {
     document.querySelector(`#${player}-board`).appendChild(shipDiv)
     
   }
-  //renderBoard(playerStr, ships)
-  renderBoard(player, ships){
-    for (const[shipName, ship] of Object.entries(ships)){
-    this.placeShip(player, ship)
+  //renderBoard(playerObject)
+  renderBoard(player){
+    for (const[shipName, ship] of Object.entries(player.ships)){
+    this.placeShip(player.name, ship)
     }
   }
 }

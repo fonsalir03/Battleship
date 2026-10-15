@@ -30,3 +30,9 @@ body {
 .cell:hover {
   background-color: #3024407e;
 }
+
+#test-panel {
+  background-color: #3C2E51;
+  height: 25vh;
+  width: 25vh;
+}

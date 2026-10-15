@@ -2,13 +2,15 @@ import { Gameboard } from "./gameboard.js";
 
 
 class Player {
-  constructor() {
+  constructor(playerName="player") {
+    this.name=playerName
     this.board = new Gameboard();
     this.ships = this.board.ships
   }
 }
 class Computer {
   constructor() {
+    this.name="computer"
     this.board = new Gameboard();
     this.ships = this.board.ships
     this.generatedCordinates = []
