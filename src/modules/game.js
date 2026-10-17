@@ -12,9 +12,9 @@ export class Game {
       this.placeComputerShips();
     }
 
-
   }
 
+  //test function
   placePlayerShips(){
     const board = this.player.board
     const ships = board.ships
@@ -26,6 +26,7 @@ export class Game {
     board.placeShip(ships["patrol"],[6,1])
 
   }
+  //test function
   placeComputerShips(){
     const board = this.computer.board
     const ships = board.ships
@@ -40,7 +41,12 @@ export class Game {
 
   attackComputer(cord){
     this.computer.board.receiveAttack(cord)
+    //generate random cord
+    const randCord = this.computer.randomCordinate()
+    //this.attackPlayer()
+    this.attackPlayer(randCord)
     this.turn = "c"
+    return randCord
   }
   attackPlayer(cord){
     this.player.board.receiveAttack(cord)

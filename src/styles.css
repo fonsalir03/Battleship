@@ -9,6 +9,7 @@ body {
   grid-template-columns: repeat(10, minmax(0,1fr));
   width: 250px;
   height: 250px;
+  margin-bottom: 1vh;
 }
 
 .ship img {
@@ -35,4 +36,14 @@ body {
   background-color: #3C2E51;
   height: 25vh;
   width: 25vh;
+}
+.hit{
+
+  background-color: rgba(255, 0, 0, 0.452);
+
+}
+.missed{
+
+  background-color: rgba(255, 255, 255, 0.304);
+
 }

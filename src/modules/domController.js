@@ -12,11 +12,17 @@ class DomController {
     this.testPanel = document.createElement("div");
     this.testPanel.id = "test-panel"
 
-    const turnContainer = document.createElement("div");
-    turnContainer.id = "turn-container";
-    this.testPanel.appendChild(turnContainer)
+    this.turnContainer = document.createElement("div");
+    this.turnContainer.id = "turn-container";
+    this.testPanel.appendChild(this.turnContainer)
 
     document.body.appendChild(this.testPanel)
+
+  }
+
+  displayTurn(turn){
+    
+    this.turnContainer.textContent = turn
 
   }
 
@@ -35,6 +41,7 @@ class DomController {
     gameboard.classList.add("gameboard");
     
     const grid = document.createElement("div")
+    grid.id = `${name}-board`;
     grid.classList.add("grid")
 
     //render grid
@@ -100,6 +107,25 @@ class DomController {
     for (const[shipName, ship] of Object.entries(player.ships)){
     this.placeShip(player.name, ship)
     }
+  }
+
+  markAsMissed(cell){
+    cell.classList.add("missed")
+  }
+
+  markAsHit(cell){
+    cell.classList.add("hit")
+  }
+  updateCell(cellObj, cell){
+    if (cellObj.ship == "unset"){
+      this.markAsMissed(cell)
+    }else{
+      this.markAsHit(cell)
+    }
+  }
+
+  getCellNode(cord){
+    return document.querySelector(`div[data-x="${cord[0]}"][data-y="${cord[1]}"]`)
   }
 }
 
