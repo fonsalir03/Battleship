@@ -1,3 +1,1 @@
-import domController from "./modules/domController.js";
-
-domController.createGameboard("player");
+import eventHandler from "./modules/eventHandler.js";
