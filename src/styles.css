@@ -28,9 +28,6 @@ body {
   grid-template-rows: subgrid;
 }
 
-.cell:hover {
-  background-color: #3024407e;
-}
 
 #test-panel {
   background-color: #3C2E51;
@@ -46,4 +43,23 @@ body {
 
   background-color: rgba(255, 255, 255, 0.304);
 
+}
+
+#ships-container {
+  display: grid;
+  grid-template-columns: repeat(5,1fr);
+  grid-template-rows: repeat(5,minmax(0,1fr));
+  width: 250px;
+  height: 250px;
+}
+
+.selected-ship {
+  border: solid #27ff2352 1px ;
+}
+
+.selected-cell {
+  background-color:#2a1e3d
+}
+.highlighted {
+  background-color: #3024407e;  
 }

@@ -1,11 +1,18 @@
 import horizontalShipIcon from "../asset/ship.png"
 import verticleShipIcon from "../asset/verticle_ship.png"
 
-  //the turn should be indicated by text or change in border color
-
 class DomController {
   constructor() {
+    this.playerName = "player"
     this.cellClickCallback = undefined
+    this.displayedShipCallback = undefined
+    this.cellHoverCallback = undefined
+    this.playerGridMouseOutCallback = undefined
+
+    this.mainContainer = document.createElement("div")
+    this.mainContainer.id = "main-container"
+
+    document.body.appendChild(this.mainContainer)
   }
 
   renderTestPanel(){
@@ -41,8 +48,9 @@ class DomController {
     gameboard.classList.add("gameboard");
     
     const grid = document.createElement("div")
-    grid.id = `${name}-board`;
-    grid.classList.add("grid")
+    grid.id = `${name}-grid`;
+    grid.classList.add("grid");
+    grid.addEventListener("mouseout", this.playerGridMouseOutCallback)
 
     //render grid
     let x = 0
@@ -61,13 +69,14 @@ class DomController {
       }
 
       newCell.addEventListener("click", this.cellClickCallback)
+      newCell.addEventListener("mousemove", this.cellHoverCallback)
       this.assignCordinate(newCell, [x,y])
 
       x = x + 1
     }
 
     gameboard.append(grid)
-    document.body.appendChild(gameboard);
+    this.mainContainer.appendChild(gameboard);
   }
   //placeShip(playerStr,shipObj)
   placeShip(player, shipObj){
@@ -127,6 +136,150 @@ class DomController {
   getCellNode(cord){
     return document.querySelector(`div[data-x="${cord[0]}"][data-y="${cord[1]}"]`)
   }
+
+
+
+  displayShip(start,ship,orientation){
+    const shipsContainer = document.getElementById("ships-container")
+  
+    const shipDiv = document.createElement("div")
+    shipDiv.classList.add("ship")
+    shipDiv.id = ship.name
+    shipDiv.dataset.size = ship.size
+
+    const shipImg = document.createElement("img")
+    shipImg.addEventListener("click", this.displayedShipCallback)
+    shipDiv.appendChild(shipImg)    
+
+    //make the ship stretch to desired size
+    if (orientation=="v"){
+      shipImg.src = verticleShipIcon
+      shipDiv.style.gridColumnStart = start
+      shipDiv.style.gridRowStart = 1
+      shipDiv.style.gridRowEnd = ship.size + 1
+    }
+    if (orientation=="h"){
+      shipImg.src = horizontalShipIcon
+      shipDiv.style.gridRowStart = start
+      shipDiv.style.gridColumnStart = 1
+      shipDiv.style.gridColumnEnd = ship.size + 1
+    }
+
+    shipsContainer.appendChild(shipDiv)
+
+  }
+
+  removeShipFromDisplay(shipName){
+    const shipDiv = document.querySelector(`#${shipName}`);
+    shipDiv.style.display = "none"
+  }
+
+  createStartMenu(playerName){
+    this.createGameboard(playerName)
+    
+    const startButtonContainer = document.createElement("div")
+    startButtonContainer.id = "start-btn-container"
+
+    const startButton = document.createElement("button")
+    startButton.id = "start-btn"
+    startButton.textContent = "ENTER GAME"
+
+    startButtonContainer.appendChild(startButton)
+    this.mainContainer.appendChild(startButtonContainer)
+
+    const orientationBtnContainer = document.createElement("div")
+    orientationBtnContainer.id = "orientation-btn-container"
+    
+    const orientationBtn = document.createElement("button")
+    orientationBtn.id = "orientation-btn"
+    orientationBtn.textContent = "Place on Y axis"
+
+    orientationBtnContainer.appendChild(orientationBtn)
+    this.mainContainer.appendChild(orientationBtnContainer)
+
+    const shipsContainer = document.createElement("div")
+    shipsContainer.id = "ships-container"
+    
+    this.mainContainer.appendChild(shipsContainer)
+
+    const shipsInfo = [{name:"carrier", size:5},{name:"battle", size: 4},{name:"destroyer",size:3},{name:"submarine", size:3},{name:"patrol", size:2}]
+    //puts ships on display
+    for (const [i, ship] of Object.entries(shipsInfo)){
+      this.displayShip(Number(i)+1, ship, "v")
+    }
+  
+  }
+
+  selectShip(shipName){
+    const ship = document.querySelector(`#${shipName}`)
+    //deselect if clicked twice
+    if (ship.classList.contains("selected-ship")){
+      ship.classList.remove("selected-ship")
+      return undefined
+    }
+
+      const shipsContainer = document.querySelector("#ships-container")
+      shipsContainer.childNodes.forEach(node => {
+        node.classList.remove("selected-ship")
+      });
+
+
+      ship.classList.add("selected-ship")
+      return {name:ship.id, size: ship.dataset.size}
+  }
+  //{name, size}, [x,y]
+  placeTempShip(ship, cord, orientation){
+    for (let i = 0; i < ship.size; i++){
+      let currCell = undefined
+      if (orientation == "v"){
+        currCell = this.getCellNode([cord[0],cord[1]+i])
+      }
+      if (orientation == "h"){
+        currCell = this.getCellNode([cord[0]+i,cord[1]])
+      }
+      
+      currCell.classList.add("selected-cell")
+    }
+  }
+
+  removeHighlights(){
+    const playerGrid = document.querySelector(`#${this.playerName}-grid`)
+    playerGrid.childNodes.forEach(node => {
+      if (node.classList.contains("highlighted")) node.classList.remove("highlighted")
+    });
+  }
+
+
+  hoverShipPlacement(cell,size, orientation){
+    
+    this.removeHighlights()
+    for (let i = 0; i < size; i++){
+      let currCell = null
+      if (orientation=="v") {
+        currCell = this.getCellNode([cell.dataset.x, Number(cell.dataset.y) + i])
+      }
+      if (orientation=="h") {
+        currCell = this.getCellNode([Number(cell.dataset.x)+i, cell.dataset.y])
+      }
+      if (!currCell) return
+      currCell.classList.add("highlighted")
+    }
+  }
+
+  isLegalPlacement(cell, size, orientation){
+    for (let i = 0; i< size; i++){
+      let currCell = null
+      if (orientation=="v") {
+        currCell = this.getCellNode([cell.dataset.x, Number(cell.dataset.y) + i])
+      }
+      if (orientation=="h") {
+        currCell = this.getCellNode([Number(cell.dataset.x)+i, cell.dataset.y])
+      }
+      if (!currCell) return
+      if (currCell.classList.contains("selected-cell")) return false
+    }
+  }
+
 }
 
 export default new DomController();
