@@ -10,6 +10,7 @@ class eventHandler {
       domController.displayedShipCallback = this.handleDisplayedShipClick
       domController.cellHoverCallback = this.handleCellHover
       domController.playerGridMouseOutCallback = this.handlePlayerGridMouseOut
+      domController.orientationChangeCallback = this.handleOrientationChangeBtnPress
 
       this.playerName = "player"
       domController.playerName = "player"
@@ -18,6 +19,7 @@ class eventHandler {
       //track selected ship
       this.selectedShip = undefined
       this.legalPlacement = undefined
+      this.orientation = "v"
       //listen for change in orientation
       //listen for request of ship placement
       //once the required input is gatherd ([x,y],name,orientation) it can be stored in an object
@@ -39,7 +41,8 @@ class eventHandler {
     //in start menu
     if (boardId==`${this.playerName}-grid` && this.game == undefined) {
       if (this.selectedShip && this.legalPlacement!= false){
-        domController.placeTempShip(this.selectedShip, [Number(node.target.dataset.x), Number(node.target.dataset.y)], "h")
+        domController.placeTempShip(this.selectedShip, [Number(node.target.dataset.x), Number(node.target.dataset.y)], this.orientation)
+        //log the placement 
         domController.removeShipFromDisplay(this.selectedShip.name)
         this.selectedShip = undefined
       }
@@ -86,19 +89,21 @@ class eventHandler {
   handleDisplayedShipClick = (node)=>{
     const shipName = node.target.parentElement.id
     this.selectedShip = domController.selectShip(shipName)
-    console.log(this.selectedShip)
   }
 
   handleCellHover = (node)=>{
     //console.log(node.target)
     if (!this.selectedShip) return
-    this.legalPlacement = domController.isLegalPlacement(node.target, this.selectedShip.size, "h")
-    domController.hoverShipPlacement(node.target,this.selectedShip.size, "h")
-    console.log(this.legalPlacement)
+    this.legalPlacement = domController.isLegalPlacement(node.target, this.selectedShip.size, this.orientation)
+    domController.hoverShipPlacement(node.target,this.selectedShip.size, this.orientation)
   }
 
   handlePlayerGridMouseOut = ()=>{
     domController.removeHighlights()
+  }
+
+  handleOrientationChangeBtnPress = ()=>{
+    this.orientation = domController.changeOrientation(this.orientation)
   }
 
 }

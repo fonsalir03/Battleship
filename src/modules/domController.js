@@ -8,6 +8,7 @@ class DomController {
     this.displayedShipCallback = undefined
     this.cellHoverCallback = undefined
     this.playerGridMouseOutCallback = undefined
+    this.orientationChangeCallback = undefined
 
     this.mainContainer = document.createElement("div")
     this.mainContainer.id = "main-container"
@@ -192,7 +193,8 @@ class DomController {
     
     const orientationBtn = document.createElement("button")
     orientationBtn.id = "orientation-btn"
-    orientationBtn.textContent = "Place on Y axis"
+    orientationBtn.textContent = "Place on what axis?"
+    orientationBtn.addEventListener("click", this.orientationChangeCallback)
 
     orientationBtnContainer.appendChild(orientationBtn)
     this.mainContainer.appendChild(orientationBtnContainer)
@@ -249,7 +251,6 @@ class DomController {
     });
   }
 
-
   hoverShipPlacement(cell,size, orientation){
     
     this.removeHighlights()
@@ -275,9 +276,25 @@ class DomController {
       if (orientation=="h") {
         currCell = this.getCellNode([Number(cell.dataset.x)+i, cell.dataset.y])
       }
-      if (!currCell) return
+      if (!currCell) return false
       if (currCell.classList.contains("selected-cell")) return false
     }
+  }
+
+  changeOrientation(orientation){
+    let newOrientation = undefined
+    //get orientation button to change text content
+    const orientationBtn = document.querySelector("#orientation-btn")
+    if (orientation=="v"){
+      orientationBtn.textContent = "Placing on X axis"
+      newOrientation = "h"
+    }else if (orientation=="h") {
+      orientationBtn.textContent = "Placing on Y axis"
+      newOrientation = "v"
+    }
+    //flip ships ?
+    //return the new orientation
+    return newOrientation
   }
 
 }
