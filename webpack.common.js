@@ -28,7 +28,7 @@ export default {
       {
         test: /\.(svg|png)$/i,
         type: "asset/resource",
-      }
-    ]
-  }
+      },
+    ],
+  },
 };

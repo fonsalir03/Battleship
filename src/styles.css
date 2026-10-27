@@ -3,10 +3,10 @@ body {
 }
 
 .gameboard {
-  background-color: #3C2E51;
+  background-color: #3c2e51;
   display: grid;
-  grid-template-rows: repeat(10, minmax(0,1fr));
-  grid-template-columns: repeat(10, minmax(0,1fr));
+  grid-template-rows: repeat(10, minmax(0, 1fr));
+  grid-template-columns: repeat(10, minmax(0, 1fr));
   width: 250px;
   height: 250px;
   margin-bottom: 1vh;
@@ -18,13 +18,11 @@ body {
   width: 100%;
 }
 
-
 .ship img {
   height: 100%;
   width: 100%;
 }
 .grid {
-
   position: relative;
 
   grid-column: 1/-1;
@@ -35,27 +33,22 @@ body {
   grid-template-rows: subgrid;
 }
 
-
 #test-panel {
-  background-color: #3C2E51;
+  background-color: #3c2e51;
   height: 25vh;
   width: 25vh;
 }
-.hit{
-
+.hit {
   background-color: rgba(255, 0, 0, 0.452);
-
 }
-.missed{
-
+.missed {
   background-color: rgba(255, 255, 255, 0.304);
-
 }
 
 #ships-container {
   display: grid;
-  grid-template-columns: repeat(5,1fr);
-  grid-template-rows: repeat(5,minmax(0,1fr));
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(5, minmax(0, 1fr));
   width: 250px;
   height: 250px;
 }
@@ -65,15 +58,15 @@ body {
 }
 
 .selected-ship {
-  border: solid #27ff2352 1px ;
+  border: solid #27ff2352 1px;
 }
 
 .selected-cell {
-  background-color:#2a1e3d
+  background-color: #2a1e3d;
 }
 .highlighted {
-  background-color: #3024407e;  
+  background-color: #3024407e;
 }
-#computer-grid .cell:hover{
+#computer-grid .cell:hover {
   background-color: #3024407e;
 }

@@ -25,9 +25,8 @@ export class Gameboard {
   // property that tracks the sunken ships
 
   constructor() {
-
-    this.width = 10
-    this.height = 10
+    this.width = 10;
+    this.height = 10;
 
     this.grid = new Array();
     for (let i = 0; i < this.width; i++) {
@@ -68,7 +67,7 @@ export class Gameboard {
     const x = cordinates[0];
     const y = cordinates[1];
     ship.orientation = this.orientation;
-    let isLegalPlacement = true
+    let isLegalPlacement = true;
 
     //checks if spaces are void of ship
     for (let i = 0; i < ship.length; i++) {
@@ -77,12 +76,12 @@ export class Gameboard {
       else if (ship.orientation == "h") cell = this.getCell(x + i, y);
 
       if (!cell) {
-        isLegalPlacement = false
-        return
-      }else if (cell.ship != "unset") {
-        isLegalPlacement = false 
-        return
-      };
+        isLegalPlacement = false;
+        return;
+      } else if (cell.ship != "unset") {
+        isLegalPlacement = false;
+        return;
+      }
     }
 
     for (let i = 0; i < ship.length; i++) {
@@ -97,7 +96,7 @@ export class Gameboard {
     }
     ship.x = x;
     ship.y = y;
-    return isLegalPlacement
+    return isLegalPlacement;
   }
 
   //receiveAttack([x,y])
