@@ -68,6 +68,7 @@ export class Gameboard {
     const x = cordinates[0];
     const y = cordinates[1];
     ship.orientation = this.orientation;
+    let isLegalPlacement = true
 
     //checks if spaces are void of ship
     for (let i = 0; i < ship.length; i++) {
@@ -75,8 +76,13 @@ export class Gameboard {
       if (ship.orientation == "v") cell = this.getCell(x, y + i);
       else if (ship.orientation == "h") cell = this.getCell(x + i, y);
 
-      if (!cell) return;
-      else if (cell.ship != "unset") return;
+      if (!cell) {
+        isLegalPlacement = false
+        return
+      }else if (cell.ship != "unset") {
+        isLegalPlacement = false 
+        return
+      };
     }
 
     for (let i = 0; i < ship.length; i++) {
@@ -91,6 +97,7 @@ export class Gameboard {
     }
     ship.x = x;
     ship.y = y;
+    return isLegalPlacement
   }
 
   //receiveAttack([x,y])

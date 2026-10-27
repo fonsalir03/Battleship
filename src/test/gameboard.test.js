@@ -34,7 +34,7 @@ test("the grid holds destroyer in verticle orientation", () => {
   board.orientation = "v";
 
   //place patroal head at 33 with verticle orientation
-  board.placeShip(board.ships["patrol"], [3, 3]);
+  expect(board.placeShip(board.ships["patrol"], [3, 3])).toBeTruthy();
   expect(board.getCell(3, 2)["ship"] == "unset").toBeTruthy();
   expect(board.getCell(3, 3)["ship"] == board.ships["patrol"]).toBeTruthy();
   expect(board.getCell(3, 4)["ship"] == board.ships["patrol"]).toBeTruthy();
@@ -46,19 +46,19 @@ test("the grid holds destroyer in horizontal orientation", () => {
   board.orientation = "h";
 
   //place destroyer head at 00 with horizontal orientation
-  board.placeShip(board.ships["destroyer"], [0, 0]);
+  expect(board.placeShip(board.ships["destroyer"], [0, 0])).toBeTruthy();
   expect(board.getCell(0, 0)["ship"] == board.ships["destroyer"]).toBeTruthy();
   expect(board.getCell(1, 0)["ship"] == board.ships["destroyer"]).toBeTruthy();
   expect(board.getCell(2, 0)["ship"] == board.ships["destroyer"]).toBeTruthy();
   expect(board.getCell(3, 0)["ship"] == "unset").toBeTruthy();
 });
 
-test("gameboard will not place a ship if it overrides another", () => {
+test("gameboard will not place a ship if it overrides another and return false if not legal placement", () => {
   const board = new Gameboard();
   board.orientation = "h";
 
-  board.placeShip(board.ships["submarine"], [4, 4]);
-  board.placeShip(board.ships["carrier"], [5, 4]);
+  expect(board.placeShip(board.ships["submarine"], [4, 4])).toBeTruthy();
+  expect(board.placeShip(board.ships["carrier"], [5, 4])).toBeFalsy();
   board.orientation = "v";
   board.placeShip(board.ships["battle"], [5, 3]);
 
