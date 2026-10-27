@@ -9,6 +9,7 @@ class DomController {
     this.cellHoverCallback = undefined
     this.playerGridMouseOutCallback = undefined
     this.orientationChangeCallback = undefined
+    this.startBtnClickCallback = undefined
 
     this.mainContainer = document.createElement("div")
     this.mainContainer.id = "main-container"
@@ -109,13 +110,15 @@ class DomController {
       shipDiv.style.gridColumnEnd = x + shipObj.length
     }
 
-    document.querySelector(`#${player}-board`).appendChild(shipDiv)
+    document.querySelector(`#${player}-grid`).appendChild(shipDiv)
     
   }
   //renderBoard(playerObject)
   renderBoard(player){
+    this.removeSelectedCellShades()
+
     for (const[shipName, ship] of Object.entries(player.ships)){
-    this.placeShip(player.name, ship)
+      this.placeShip(player.name, ship)
     }
   }
 
@@ -184,6 +187,7 @@ class DomController {
     const startButton = document.createElement("button")
     startButton.id = "start-btn"
     startButton.textContent = "ENTER GAME"
+    startButton.addEventListener("click", this.startBtnClickCallback)
 
     startButtonContainer.appendChild(startButton)
     this.mainContainer.appendChild(startButtonContainer)
@@ -283,8 +287,8 @@ class DomController {
 
   changeOrientation(orientation){
     let newOrientation = undefined
-    //get orientation button to change text content
     const orientationBtn = document.querySelector("#orientation-btn")
+    
     if (orientation=="v"){
       orientationBtn.textContent = "Placing on X axis"
       newOrientation = "h"
@@ -292,11 +296,32 @@ class DomController {
       orientationBtn.textContent = "Placing on Y axis"
       newOrientation = "v"
     }
-    //flip ships ?
-    //return the new orientation
     return newOrientation
   }
 
+  removeSelectedCellShades(){
+    const playerGrid = document.querySelector(`#${this.playerName}-grid`)
+    playerGrid.childNodes.forEach(cell => {
+      if (cell.classList.contains("selected-cell")){
+        cell.classList.remove("selected-cell")
+      }
+    });
+  }
+
+  removeStartMenu(){
+    const startBtnContainer = document.querySelector("#start-btn-container")
+    this.mainContainer.removeChild(startBtnContainer)
+
+    const orientation = document.querySelector("#orientation-btn-container")
+    this.mainContainer.removeChild(orientation)
+
+    const shipDisplay = document.querySelector("#ships-container")
+    this.mainContainer.removeChild(shipDisplay)
+    
+  }
+
 }
+
+  
 
 export default new DomController();

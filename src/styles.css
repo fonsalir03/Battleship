@@ -12,6 +12,13 @@ body {
   margin-bottom: 1vh;
 }
 
+.ship {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+
+
 .ship img {
   height: 100%;
   width: 100%;
@@ -53,6 +60,10 @@ body {
   height: 250px;
 }
 
+#ships-container div {
+  position: static;
+}
+
 .selected-ship {
   border: solid #27ff2352 1px ;
 }
@@ -62,4 +73,7 @@ body {
 }
 .highlighted {
   background-color: #3024407e;  
+}
+#computer-grid .cell:hover{
+  background-color: #3024407e;
 }

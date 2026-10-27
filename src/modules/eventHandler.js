@@ -11,21 +11,18 @@ class eventHandler {
       domController.cellHoverCallback = this.handleCellHover
       domController.playerGridMouseOutCallback = this.handlePlayerGridMouseOut
       domController.orientationChangeCallback = this.handleOrientationChangeBtnPress
+      domController.startBtnClickCallback = this.handleStartBtnClick
+
+      this.selectedShip = undefined
+      this.legalPlacement = undefined
+      this.orientation = "v"
+      this.placedShips = {}
 
       this.playerName = "player"
       domController.playerName = "player"
       
       this.initStartMenu(this.playerName)
-      //track selected ship
-      this.selectedShip = undefined
-      this.legalPlacement = undefined
-      this.orientation = "v"
-      //listen for change in orientation
-      //listen for request of ship placement
-      //once the required input is gatherd ([x,y],name,orientation) it can be stored in an object
-      //  once that object is filled, start button will listen for input
-      //  see psuedocode in game module for next steps
-      //this.initGame(shipPlacements)
+
     
     })
   }
@@ -42,7 +39,8 @@ class eventHandler {
     if (boardId==`${this.playerName}-grid` && this.game == undefined) {
       if (this.selectedShip && this.legalPlacement!= false){
         domController.placeTempShip(this.selectedShip, [Number(node.target.dataset.x), Number(node.target.dataset.y)], this.orientation)
-        //log the placement 
+        //log the placement
+        this.placedShips[this.selectedShip.name] = {orientation: this.orientation, cord: cord}
         domController.removeShipFromDisplay(this.selectedShip.name)
         this.selectedShip = undefined
       }
@@ -68,18 +66,18 @@ class eventHandler {
     }
   }
 
-  initGame(){
+  initGame(shipPlacements){
 
-      this.game = new Game(true);
+      this.game = new Game(shipPlacements);
       this.player = this.game.player
       this.player.name = this.playerName
       this.computer = this.game.computer
 
-      domController.renderBoard(this.player);
+      domController.removeStartMenu()
+      domController.renderBoard(this.player)
 
-      domController.createGameboard("computer");
+      domController.createGameboard("computer")
       
-
   }
 
   initStartMenu(playerName){
@@ -92,7 +90,6 @@ class eventHandler {
   }
 
   handleCellHover = (node)=>{
-    //console.log(node.target)
     if (!this.selectedShip) return
     this.legalPlacement = domController.isLegalPlacement(node.target, this.selectedShip.size, this.orientation)
     domController.hoverShipPlacement(node.target,this.selectedShip.size, this.orientation)
@@ -104,6 +101,14 @@ class eventHandler {
 
   handleOrientationChangeBtnPress = ()=>{
     this.orientation = domController.changeOrientation(this.orientation)
+  }
+
+  handleStartBtnClick = ()=>{
+    if (Object.keys(this.placedShips).length != 5){
+      alert("Place all ships before entering game!")
+      return
+    }
+    this.initGame(this.placedShips)
   }
 
 }
