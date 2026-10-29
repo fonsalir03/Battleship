@@ -15,7 +15,7 @@ class eventHandler {
 
       this.selectedShip = undefined;
       this.legalPlacement = undefined;
-      this.orientation = "v";
+      this.orientation = "h";
       this.placedShips = {};
 
       this.playerName = "player";
@@ -82,6 +82,7 @@ class eventHandler {
 
     domController.removeStartMenu();
     domController.renderBoard(this.player);
+    domController.alignPlayerBoard()
 
     domController.createGameboard("computer");
   }
@@ -118,6 +119,7 @@ class eventHandler {
   };
 
   handleStartBtnClick = () => {
+    
     if (Object.keys(this.placedShips).length != 5) {
       alert("Place all ships before entering game!");
       return;

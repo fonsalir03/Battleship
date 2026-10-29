@@ -14,7 +14,17 @@ class DomController {
     this.mainContainer = document.createElement("div");
     this.mainContainer.id = "main-container";
 
+    const header = document.createElement("div")
+    header.id = "header"
+    header.textContent = "Battleship"
+
+    const footer = document.createElement("div")
+    footer.id = "footer"
+    footer.textContent = "created by fonsalir03"
+
+    document.body.appendChild(header)
     document.body.appendChild(this.mainContainer);
+    document.body.appendChild(footer)
   }
 
   renderTestPanel() {
@@ -190,7 +200,7 @@ class DomController {
 
     const orientationBtn = document.createElement("button");
     orientationBtn.id = "orientation-btn";
-    orientationBtn.textContent = "Place on what axis?";
+    orientationBtn.textContent = "ORIENTATION";
     orientationBtn.addEventListener("click", this.orientationChangeCallback);
 
     orientationBtnContainer.appendChild(orientationBtn);
@@ -210,7 +220,7 @@ class DomController {
     ];
     //puts ships on display
     for (const [i, ship] of Object.entries(shipsInfo)) {
-      this.displayShip(Number(i) + 1, ship, "v");
+      this.displayShip(Number(i) + 1, ship, "h");
     }
   }
 
@@ -327,6 +337,12 @@ class DomController {
     const shipDisplay = document.querySelector("#ships-container");
     this.mainContainer.removeChild(shipDisplay);
   }
+
+  alignPlayerBoard(){
+    const playerBoard = document.querySelector("#player-board");
+    playerBoard.style.gridColumn = "1/3"
+  }
+
 }
 
 export default new DomController();
